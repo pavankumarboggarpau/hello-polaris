@@ -7,9 +7,13 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class HardcodedCredentials {
     public static Connection getCon(String url) throws SQLException {
+        String password = System.getProperty("db.password");
+        if (password == null) {
+            throw new SQLException("Database password not provided");
+        }
         return DriverManager.getConnection(url,
             /*username*/ "leroy",
-            /*password*/ "jenkins");
+            /*password*/ password);
     }
     public static SecretKeySpec getKeySpec() throws UnsupportedEncodingException {
         String secret = "It's a secret to everybody.";
